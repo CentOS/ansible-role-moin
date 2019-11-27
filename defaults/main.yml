@@ -12,6 +12,10 @@ moin_acl_default:
   - AdminGroup:read,write,delete,revert,admin
   - EditGroup:read,write,delete,revert
   - All:read
+# Do we allow users to create account ?
+# By default disabled in moin 1.9.10 - https://master19.moinmo.in/HelpOnSpam
+moin_allow_registration: False
+
 # List of pages in navigation bar
 moin_navi_bar:
   - Documentation

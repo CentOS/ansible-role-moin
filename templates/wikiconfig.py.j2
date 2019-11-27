@@ -100,8 +100,13 @@ class Config(multiconfig.DefaultConfig):
     # A superuser also can use "Settings" -> "Switch user" to create users.
     # If you need the newaccount action for everybody (e.g. to create your
     # very first [superuser] account), you can (temporarily) enable it:
+{% if moin_allow_registration %}
+    actions_superuser = multiconfig.DefaultConfig.actions_superuser[:]
+    actions_superuser.remove('newaccount')
+{% else %}
     #actions_superuser = multiconfig.DefaultConfig.actions_superuser[:]
     #actions_superuser.remove('newaccount')
+{% endif %}
 
     #enable ACLS --------------------------------------------------------
     acl_hierarchic = True
