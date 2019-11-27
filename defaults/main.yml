@@ -1,1 +1,28 @@
 # Defaults variables for role moin
+# Where the data/underlay and config files will be
+moin_instance_dir: /var/www/wiki_instance
+moin_sitename: CentOS Wiki
+moin_sitelogo: centos.png
+moin_theme: memodump
+moin_superuser_list:
+  - admin
+moin_acl_admins_list:
+  - admin
+moin_acl_default:
+  - AdminGroup:read,write,delete,revert,admin
+  - EditGroup:read,write,delete,revert
+  - All:read
+# List of pages in navigation bar
+moin_navi_bar:
+  - Documentation
+  - TipsAndTricks
+  - HowTos
+  - FAQ
+  - Events
+  - Contribute
+  - RecentChanges
+
+# httpd settings
+moin_httpd_tls: True
+moin_httpd_dir: /var/www/wiki
+moin_httpd_hostname: "{{ inventory_hostname }}"

@@ -1,0 +1,6 @@
+#!/bin/bash
+pushd {{ moin_instance_dir }}
+cp -r /usr/share/moin/data/* ./data/
+cp -r /usr/share/moin/underlay/* ./underlay/
+chown -R apache.apache *
+popd

@@ -1,1 +1,121 @@
 # Defaults tasks for role moin
+- name: Ensuring moin is installed
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - moin
+    - mod_wsgi
+
+- name: Configuring httpd
+  import_role:
+    name: httpd
+  vars:
+    httpd_tls: "{{ moin_httpd_tls }}"
+
+- name: Configuring httpd vhost
+  template:
+    src: 02_moin_vhost.conf.j2
+    dest: /etc/httpd/conf.d/02_moin_vhost.conf
+  notify:
+    - restart_httpd
+
+- name: Configuring https
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/httpd/conf.d/{{ item }}"
+  notify:
+    - restart_httpd
+  with_items:
+    - ssl-moin-vhost.conf
+  when: moin_httpd_tls  
+
+- name: Ensuring we have local directories for httpd moin
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ moin_httpd_dir }}"
+   
+- import_role:
+    name: httpd
+    tasks_from: pki-tls
+  vars:
+    pki_hostname: "{{ moin_httpd_hostname }}"
+  notify:
+    - restart_httpd
+  tags:
+    - tls
+  when: moin_httpd_tls
+
+- name: wrapper to init a moin instance
+  template:
+    src: init_moin_instance.j2
+    dest: /usr/share/moin/init_moin_instance
+    mode: 0750
+  tags:
+    - config 
+
+- name: Ensuring we have local directories for moin
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: apache
+    group: apache
+    setype: httpd_sys_rw_content_t
+  with_items:
+    - "{{ moin_instance_dir }}"
+    - "{{ moin_instance_dir }}/data"
+    - "{{ moin_instance_dir }}/underlay"
+  register: moin_instance_init  
+  tags:
+    - config
+
+- name: Calling init if needed
+  command: /usr/share/moin/init_moin_instance
+  when: moin_instance_init is changed
+  tags:
+    - config
+
+- name: Configuring moin instance with wikiconfig.py
+  template:
+    src: wikiconfig.py.j2
+    dest: "{{ moin_instance_dir }}/wikiconfig.py"
+  tags:
+    - config
+
+- name: Configuring wsgi
+  template:
+    src: moin.wsgi.j2
+    dest: "{{ moin_instance_dir }}/moin.wsgi"
+  tags:
+    - config
+
+- name: Importing theme {{ moin_theme }}
+  synchronize:
+    src: "themes/{{ moin_theme }}/"
+    dest: "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/{{ moin_theme }}/"
+  tags:
+    - theme
+    - config
+
+- name: Importing plugin theme
+  copy:
+    src: "plugin/theme/{{ moin_theme }}.py"
+    dest: "{{ moin_instance_dir }}/data/plugin/theme/{{ moin_theme }}.py"
+  tags:
+    - theme
+    - config
+
+- name: Importing site logo
+  copy:
+    src: "logos/{{ moin_sitelogo }}"
+    dest: "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/common/"
+  tags:
+    - theme
+    - config
+
+- name: Ensuring backup user and jobs
+  include_role:
+    name: centos-backup
+    tasks_from: client
