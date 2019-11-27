@@ -115,7 +115,24 @@
     - theme
     - config
 
+- name: Importing moin plugin[s]
+  copy:
+    src: "plugin/{{ item }}"
+    dest: "{{ moin_instance_dir }}/data/plugin/{{ item }}"
+  with_items: "{{ moin_plugins }}"
+  tags:
+    - plugins
+    - config
+
+- include_tasks: selinux.yml
+  tags:
+    - selinux
+
 - name: Ensuring backup user and jobs
   include_role:
     name: centos-backup
     tasks_from: client
+  vars:
+    - centos_role: moin
+    - role_backup_folders:
+        - "{{ moin_instance_dir }}"

@@ -16,6 +16,10 @@ moin_acl_default:
 # By default disabled in moin 1.9.10 - https://master19.moinmo.in/HelpOnSpam
 moin_allow_registration: False
 
+# Enhancing moin with some plugins
+moin_plugins:
+  - macro/IncludeUrlContentWiki.py
+
 # List of pages in navigation bar
 moin_navi_bar:
   - Documentation

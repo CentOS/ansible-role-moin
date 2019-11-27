@@ -1,0 +1,12 @@
+- name: Enabling selinux booleans
+  seboolean:
+    name: "{{ item }}"
+    persistent: yes
+    state: yes  
+  with_items:
+    - httpd_can_network_connect
+    - httpd_can_sendmail
+  when: ansible_selinux.status == "enabled"
+  tags:
+    - selinux
+
