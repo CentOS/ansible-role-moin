@@ -128,6 +128,13 @@
   tags:
     - selinux
 
+- include_role:
+    name: postfix
+    tasks_from: relay_to
+  vars:
+    postfix_relay_to: True 
+  when: moin_send_mail
+
 - name: Ensuring backup user and jobs
   include_role:
     name: centos-backup

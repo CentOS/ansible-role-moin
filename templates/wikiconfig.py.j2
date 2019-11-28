@@ -134,7 +134,10 @@ class Config(multiconfig.DefaultConfig):
 
     # Configure to enable subscribing to pages (disabled by default)
     # or sending forgotten passwords.
-
+{% if moin_send_mail %}
+    mail_smarthost = "{{ moin_mail_host }}"
+    mail_from = u"{{ moin_mail_from }}"
+{% else %}
     # SMTP server, e.g. "mail.provider.com" (None to disable mail)
     #mail_smarthost = ""
 
@@ -143,7 +146,7 @@ class Config(multiconfig.DefaultConfig):
 
     # "user pwd" if you need to use SMTP AUTH
     #mail_login = ""
-
+{% endif %}
 
     # User interface ----------------------------------------------------
 

@@ -16,6 +16,12 @@ moin_acl_default:
 # By default disabled in moin 1.9.10 - https://master19.moinmo.in/HelpOnSpam
 moin_allow_registration: False
 
+# Do we want to send mails and through which host
+moin_send_mail: False
+moin_mail_host: localhost.localdomain
+moin_mail_from: noreply@centos.org
+
+
 # Enhancing moin with some plugins
 moin_plugins:
   - macro/IncludeUrlContentWiki.py
