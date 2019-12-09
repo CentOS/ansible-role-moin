@@ -115,6 +115,14 @@
     - theme
     - config
 
+- name: Importing favicon.ico
+  copy:
+    src: "logos/favicon.ico"
+    dest: "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/"
+  tags:
+    - theme
+    - config
+
 - name: Importing moin plugin[s]
   copy:
     src: "plugin/{{ item }}"
