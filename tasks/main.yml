@@ -1,11 +1,8 @@
 # Defaults tasks for role moin
 - name: Ensuring moin is installed
   yum:
-    name: "{{ item }}"
+    name: ['moin', 'mod_wsgi']
     state: latest
-  with_items:
-    - moin
-    - mod_wsgi
 
 - name: Configuring httpd
   import_role:

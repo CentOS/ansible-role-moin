@@ -9,19 +9,24 @@
  Header always set X-Content-Type-Options "nosniff"
  Header always set Referrer-Policy "same-origin"
 
-  WSGIDaemonProcess moin user=apache group=apache maximum-requests=1000 display-name=moin processes=5 threads=10 inactivity-timeout=300
+ # To serve static content directly through httpd/apache and not hitting wsgi
+ Alias /moin_static1910/  "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/"
+ <Directory "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/">
+                Require all granted
+ </Directory>
+
+
+  WSGIDaemonProcess moin user=apache group=apache maximum-requests={{ moin_wsgi_max_requests }} display-name=moin processes={{ moin_wsgi_processes }} threads={{ moin_wsgi_threads }} inactivity-timeout=300
   WSGIScriptAlias / "/var/www/wiki_instance/moin.wsgi"
 
   RewriteEngine on
-
 
   <Directory "{{ moin_httpd_dir }}">
                 RewriteEngine on
                 LogLevel alert rewrite:trace6
                 Options +FollowSymLinks
                 AllowOverride All
-                Order allow,deny
-                Allow from all
+                Require all granted
   </Directory> 
 
 

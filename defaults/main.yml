@@ -40,3 +40,7 @@ moin_navi_bar:
 moin_httpd_tls: True
 moin_httpd_dir: /var/www/wiki
 moin_httpd_hostname: "{{ inventory_hostname }}"
+# mod_wsgi settings for httpd
+moin_wsgi_max_requests: 2000
+moin_wsgi_processes: 10
+moin_wsgi_threads: 20
