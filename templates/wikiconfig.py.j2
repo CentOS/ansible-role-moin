@@ -110,6 +110,16 @@ class Config(multiconfig.DefaultConfig):
     #actions_superuser.remove('newaccount')
 {% endif %}
 
+    # Spam/surge protection
+    # How many action type per cycle in seconds
+    surge_action_limits = {
+        'edit': (3, 60),
+        'fullsearch': (1,60),
+        'default': (30,60),
+    }
+    # seconds someone gets locked out if ignoring warnings
+    surge_lockout_time = 7200
+
     #enable ACLS --------------------------------------------------------
     acl_hierarchic = True
 
