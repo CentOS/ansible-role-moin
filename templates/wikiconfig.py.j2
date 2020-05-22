@@ -113,9 +113,9 @@ class Config(multiconfig.DefaultConfig):
     # Spam/surge protection
     # How many action type per cycle in seconds
     surge_action_limits = {
-        'edit': (3, 60),
-        'fullsearch': (1,60),
-        'default': (30,60),
+        'edit': ({{ moin_surge_action_edit }}, 60),
+        'fullsearch': ({{ moin_surge_action_fullsearch }},60),
+        'default': ({{ moin_surge_action_default }},60),
     }
     # seconds someone gets locked out if ignoring warnings
     surge_lockout_time = 7200

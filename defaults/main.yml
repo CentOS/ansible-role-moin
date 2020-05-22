@@ -16,6 +16,12 @@ moin_acl_default:
 # By default disabled in moin 1.9.10 - https://master19.moinmo.in/HelpOnSpam
 moin_allow_registration: False
 
+# We use surge protection also to limit spam actions and high-load
+# Default cycle is 60seconds and number of allowed actions in one cycle
+moin_surge_action_edit: 3
+moin_surge_action_fullsearch: 3
+moin_surge_action_default: 30
+
 # Do we want to send mails and through which host
 moin_send_mail: False
 moin_mail_host: localhost.localdomain
