@@ -14,6 +14,7 @@
   template:
     src: 02_moin_vhost.conf.j2
     dest: /etc/httpd/conf.d/02_moin_vhost.conf
+    mode: 0644
   notify:
     - restart_httpd
 
@@ -21,6 +22,7 @@
   template:
     src: "{{ item }}.j2"
     dest: "/etc/httpd/conf.d/{{ item }}"
+    mode: 0644
   notify:
     - restart_httpd
   with_items:
@@ -78,6 +80,7 @@
   template:
     src: wikiconfig.py.j2
     dest: "{{ moin_instance_dir }}/wikiconfig.py"
+    mode: 0644
   tags:
     - config
 
@@ -85,6 +88,7 @@
   template:
     src: moin.wsgi.j2
     dest: "{{ moin_instance_dir }}/moin.wsgi"
+    mode: 0644
   tags:
     - config
 
