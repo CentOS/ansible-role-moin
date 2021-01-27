@@ -124,6 +124,13 @@
     - theme
     - config
 
+- name: Configuring robots.txt
+  template:
+    src: robots.txt.j2
+    dest: "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/robots.txt"
+  tags:
+    - config
+
 - name: Importing moin plugin[s]
   copy:
     src: "plugin/{{ item }}"

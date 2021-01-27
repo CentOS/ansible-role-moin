@@ -22,6 +22,12 @@ moin_surge_action_edit: 3
 moin_surge_action_fullsearch: 3
 moin_surge_action_default: 30
 
+# moin event-log
+# 0 : don't create even-log
+# 1 : standard event-log
+# 2 : extended
+moin_log_events_format: '0'
+
 # Do we want to send mails and through which host
 moin_send_mail: False
 moin_mail_host: localhost.localdomain
@@ -50,3 +56,10 @@ moin_httpd_hostname: "{{ inventory_hostname }}"
 moin_wsgi_max_requests: 2000
 moin_wsgi_processes: 10
 moin_wsgi_threads: 20
+
+# Customizing robots.txt through custom block
+moin_robots_config_block: |
+  User-agent: *
+  Crawl-delay: 60
+  Disallow: /action/
+

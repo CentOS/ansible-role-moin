@@ -120,6 +120,10 @@ class Config(multiconfig.DefaultConfig):
     # seconds someone gets locked out if ignoring warnings
     surge_lockout_time = 7200
 
+    # Other settings from moin 1.9.x
+    backlink_method = lambda cfg, req: 'backlink' if req.user.valid else 'text'
+    log_events_format = {{ moin_log_events_format }}
+
     #enable ACLS --------------------------------------------------------
     acl_hierarchic = True
 

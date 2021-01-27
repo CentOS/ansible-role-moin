@@ -11,6 +11,9 @@
 
  # To serve static content directly through httpd/apache and not hitting wsgi
  Alias /moin_static1910/  "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/"
+ Alias /favicon.ico  "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/favicon.ico"
+ Alias /robots.txt  "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/robots.txt"
+
  <Directory "/usr/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/">
                 Require all granted
  </Directory>
