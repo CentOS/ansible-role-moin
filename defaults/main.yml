@@ -53,9 +53,14 @@ moin_httpd_tls: True
 moin_httpd_dir: /var/www/wiki
 moin_httpd_hostname: "{{ inventory_hostname }}"
 # mod_wsgi settings for httpd
-moin_wsgi_max_requests: 2000
-moin_wsgi_processes: 10
+# number of requests per *process* see above
+moin_wsgi_max_requests: 500
+# number or processes to launch
+moin_wsgi_processes: 5
+# number of threads *per* process above
 moin_wsgi_threads: 20
+# time before inactive thread/process will then free memory instead of locking it
+moin_wsgi_inactivity_timeout: 30
 
 # Customizing robots.txt through custom block
 moin_robots_config_block: |

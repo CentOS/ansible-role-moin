@@ -19,7 +19,7 @@
  </Directory>
 
 
-  WSGIDaemonProcess moin user=apache group=apache maximum-requests={{ moin_wsgi_max_requests }} display-name=moin processes={{ moin_wsgi_processes }} threads={{ moin_wsgi_threads }} inactivity-timeout=300
+  WSGIDaemonProcess moin user=apache group=apache maximum-requests={{ moin_wsgi_max_requests }} display-name=moin processes={{ moin_wsgi_processes }} threads={{ moin_wsgi_threads }} inactivity-timeout={{ moin_wsgi_inactivity_timeout }}
   WSGIScriptAlias / "/var/www/wiki_instance/moin.wsgi"
 
   RewriteEngine on
